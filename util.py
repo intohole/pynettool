@@ -76,6 +76,10 @@ def getJsonp():
     return "jsonp%s" % (randint(4))
 
 
+def get_url_info(query , base_url , data = None ,code="utf-8"):
+    url = queryurl(base_url, query)
+    return get_url_data(url,codemode = code , data= data)
+
 
 
 
