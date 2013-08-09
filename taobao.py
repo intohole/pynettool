@@ -111,6 +111,7 @@ def commentlist(itemid,tagid,page,posi):
     except Exception,e:
         print e,d
         return None
+    
 def writefile(filepath,data,mode = "a"):
     fileHandle = open(filepath,mode)
     fileHandle.write(data + "\n")
@@ -126,4 +127,5 @@ def save(itemid):
                 for comment in d:
                     writefile("/home/lixuze/phone/_%s" % tag[3],"%s##%s" %(comment["position"] , comment["rateContent"]))
 
-print getsellstatus(19399255654)    
+if __name__ == "__main__":
+    print getsellstatus(19399255654)    

@@ -22,6 +22,8 @@ def get_url_data(url , data = None,codemode = "gbk"):
         raise TaoBaoException("NO_RIGHT_DECODE",101)
     if data:
         req = urllib2.Request(url)
+        req.add_header("User-Agent" , "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36")
+        req.add_header("content-type" , "application/x-www-form-urlencoded")
         html = urllib2.urlopen(req,data).read().decode(codemode)
     else:
         req = urllib2.Request(url)
