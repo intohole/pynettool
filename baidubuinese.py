@@ -18,7 +18,13 @@ def get_search_num(word):
     query = {"word":word}
     return util.get_url_info(query, search_num_url, "utf-8")
 
+def get_area_info(word,num,areaid=''):
+    query = {"word":word,
+             "num":num,
+             "area_id":areaid}
+    return util.get_url_info(query, area_url, code="utf-8")
+
 
     
 if __name__ == "__main__":
-    print get_search_num("三星")
+    print get_area_info("三星",30,1)

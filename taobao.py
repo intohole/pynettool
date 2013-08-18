@@ -79,13 +79,7 @@ def getjson(data):
     return data
 
 
-def jsonstrtodict(jsonstr):
-    datadict = None
-    try:
-        datadict = json.loads(jsonstr)
-    except Exception,e:
-        print e
-    return datadict                
+          
 
 def getcommentinfo(tagdict):
     if not isinstance(tagdict,dict):
@@ -103,7 +97,7 @@ def getcommentinfo(tagdict):
     return None
 
 def commentlist(itemid,tagid,page,posi):
-    d = jsonstrtodict(getjson(makecomment(itemid,tagid,page,posi)))
+    d = util.jsonstrtodict(util.getjson(makecomment(itemid,tagid,page,posi)))
     try:
         if  d and d.has_key("rateDetail"):
             if d["rateDetail"].has_key("rateList"):
@@ -119,13 +113,13 @@ def writefile(filepath,data,mode = "a"):
 
 
 def save(itemid):
-    for tag in getcommentinfo(jsonstrtodict(getjson(makequery(itemid)))):
+    for tag in getcommentinfo(util.jsonstrtodict(getjson(makequery(itemid)))):
         time.sleep(1)
         for i in range(1,tag[1]+1):
             d = commentlist(itemid,tag[0],i,tag[2])
             if  d:
                 for comment in d:
-                    writefile("/home/lixuze/phone/_%s" % tag[3],"%s##%s" %(comment["position"] , comment["rateContent"]))
+                    writefile("/home//phone/_%s" % tag[3],"%s##%s" %(comment["position"] , comment["rateContent"]))
 
 if __name__ == "__main__":
     print getsellstatus(19399255654)    

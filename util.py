@@ -75,11 +75,25 @@ def getksTs():
 def getJsonp():
     return "jsonp%s" % (randint(4))
 
+'''
+功能：
+    从一个含有json字符串中，提取json字符串（jsonp({"1":2})）
+返回：
+    json字符串 成功
+    ValueError: substring not found 异常
+原理：
+    
+'''
+def getjson(data):
+    return data[data.index("{"):data.rindex("}")+1]
+
 
 def get_url_info(query , base_url , data = None ,code="utf-8"):
     url = queryurl(base_url, query)
     return get_url_data(url,codemode = code , data= data)
 
+if __name__ == "__main__":
+    print getjson("jsonp(})")
 
 
 
