@@ -15,21 +15,26 @@ code = {"gbk":"gbk",\
 _jload = json.loads
 _urlencode = urllib.urlencode
 
-
-def get_url_data(url , data = None,codemode = "gbk"):
+def _get_url_data(baseurl , data = None ,header = {}, codemode = "gbk"):
     html = ""
     if not code.has_key(codemode):
         raise TaoBaoException("NO_RIGHT_DECODE",101)
+    req = urllib2.Request(baseurl)
+    if header and isinstance(header, dict):
+        for _key,_val in header.items():
+            req.add_header(_key, _val)
     if data:
-        req = urllib2.Request(url)
-        req.add_header("User-Agent" , "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36")
-        req.add_header("content-type" , "application/x-www-form-urlencoded")
         html = urllib2.urlopen(req,data).read().decode(codemode)
     else:
-        req = urllib2.Request(url)
         html = urllib2.urlopen(req).read().decode(codemode)
     return html
-
+    
+def get_url_data(url , data = None,codemode = "gbk"):
+    header = {}
+    header["User-Agent"] =  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36"
+    header["content-type"] = "application/x-www-form-urlencoded" 
+    return _get_url_data(url , data=data , header=header , codemode=codemode)
+ 
 
 def jsonstrtodict(jsonstr):
     datadict = None
@@ -87,7 +92,14 @@ def getJsonp():
 def getjson(data):
     return data[data.index("{"):data.rindex("}")+1]
 
-
+'''
+功能：
+    从一个含有json字符串中，提取json字符串（jsonp({"1":2})）
+返回：
+   
+原理：
+    
+'''
 def get_url_info(query , base_url , data = None ,code="utf-8"):
     url = queryurl(base_url, query)
     return get_url_data(url,codemode = code , data= data)
