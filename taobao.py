@@ -14,7 +14,13 @@ commenturl = "http://rate.tmall.com/list_detail_rate.htm?"
 iteminfo = "http://rate.tmall.com/list_dsr_info.htm?"
 sellstatus = 'http://ext.mdskip.taobao.com/extension/dealRecords.htm?'
 
-def makequery(itemid):
+#函数名称 consumer_opinion(itemid):
+#函数功能 获得淘宝客户的意见评论
+#参数：
+#    itemid 淘宝商品id
+#返回：
+#    json字符串 买家意见总结
+def consumer_opinion(itemid):
     t = util.timems()
     query = {"itemId":itemid,
              "isAll":"true",
@@ -25,7 +31,16 @@ def makequery(itemid):
     url = util.queryurl(queryurl , query)
     return util.get_url_data(url, codemode = "gbk")
 
-def makecomment(itemid,tagid,page,posi):
+#
+#
+#买家评论列表
+#返回 json字符串
+# itemid 商品id
+# tagid 意见id
+# page 页数
+# posi
+#
+def consumer_comment(itemid,tagid,page,posi):
     query = {"itemId":itemid,
              "order":"1",
              "currentPage":page,
@@ -38,6 +53,7 @@ def makecomment(itemid,tagid,page,posi):
     url = util.queryurl(detailurl, query)
     return util.get_url_data(url, codemode = "gbk")
 
+
 def get_comment(itemid,page,order=1,content=1,append=''):
     query = {"itemId":itemid,
              "order":order,
@@ -48,6 +64,10 @@ def get_comment(itemid,page,order=1,content=1,append=''):
              "callback":util.getJsonp()}
     url = util.queryurl(commenturl, query)
     return util.get_url_data(url)
+#淘宝建议
+# word 任意字符串
+# 返回 
+#    json字符串
 
 def suggest(word):
     query = {
@@ -97,7 +117,7 @@ def getcommentinfo(tagdict):
     return None
 
 def commentlist(itemid,tagid,page,posi):
-    d = util.jsonstrtodict(util.getjson(makecomment(itemid,tagid,page,posi)))
+    d = util.jsonstrtodict(util.getjson(consumer_opinion(itemid,tagid,page,posi)))
     try:
         if  d and d.has_key("rateDetail"):
             if d["rateDetail"].has_key("rateList"):
@@ -113,7 +133,7 @@ def writefile(filepath,data,mode = "a"):
 
 
 def save(itemid):
-    for tag in getcommentinfo(util.jsonstrtodict(getjson(makequery(itemid)))):
+    for tag in getcommentinfo(util.jsonstrtodict(getjson(consumer_opinion(itemid)))):
         time.sleep(1)
         for i in range(1,tag[1]+1):
             d = commentlist(itemid,tag[0],i,tag[2])
@@ -122,4 +142,4 @@ def save(itemid):
                     writefile("/home//phone/_%s" % tag[3],"%s##%s" %(comment["position"] , comment["rateContent"]))
 
 if __name__ == "__main__":
-    print getsellstatus(19399255654)    
+    print list_dsr(21150040430)    
