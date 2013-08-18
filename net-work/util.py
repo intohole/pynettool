@@ -35,6 +35,20 @@ def get_url_data(url , data = None,codemode = "gbk"):
     header["content-type"] = "application/x-www-form-urlencoded" 
     return _get_url_data(url , data=data , header=header , codemode=codemode)
  
+ 
+'''
+功能：
+    从一个含有json字符串中，提取json字符串（jsonp({"1":2})）
+返回：
+   
+原理：
+    
+'''
+def get_url_info(query , base_url , data = None ,code="utf-8"):
+    url = queryurl(base_url, query)
+    return get_url_data(url,codemode = code , data= data)
+
+
 
 def jsonstrtodict(jsonstr):
     datadict = None
@@ -92,17 +106,6 @@ def getJsonp():
 def getjson(data):
     return data[data.index("{"):data.rindex("}")+1]
 
-'''
-功能：
-    从一个含有json字符串中，提取json字符串（jsonp({"1":2})）
-返回：
-   
-原理：
-    
-'''
-def get_url_info(query , base_url , data = None ,code="utf-8"):
-    url = queryurl(base_url, query)
-    return get_url_data(url,codemode = code , data= data)
 
 if __name__ == "__main__":
     print getjson("jsonp(})")
