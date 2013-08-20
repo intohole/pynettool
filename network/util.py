@@ -7,6 +7,7 @@ from taobaoexception import TaoBaoException
 import json
 import random
 import time
+from jinja2._stringdefs import No
 
 code = {"gbk":"gbk",\
         "utf-8":"utf-8"}
@@ -15,19 +16,28 @@ code = {"gbk":"gbk",\
 _jload = json.loads
 _urlencode = urllib.urlencode
 
-def _get_url_data(baseurl , data = None ,header = {}, codemode = "gbk"):
-    html = ""
-    if not code.has_key(codemode):
-        raise TaoBaoException("NO_RIGHT_DECODE",101)
+def _get_url_reponse(baseurl , data = None ,header = {}):
+    _response = None
     req = urllib2.Request(baseurl)
     if header and isinstance(header, dict):
         for _key,_val in header.items():
             req.add_header(_key, _val)
     if data:
-        html = urllib2.urlopen(req,data).read().decode(codemode)
+        if isinstance(data, dict):
+            data = urllib.urlencode(data)
+        _response = urllib2.urlopen(req,data)
     else:
-        html = urllib2.urlopen(req).read().decode(codemode)
-    return html
+        _response = urllib2.urlopen(req)
+    return _response
+
+
+def _get_url_data(baseurl , data = None ,header = {}, codemode = "gbk"):
+    _response = _get_url_reponse(baseurl , data ,header)
+    if _response:
+        if not code.has_key(codemode):
+            raise TaoBaoException("NO_RIGHT_DECODE",101)
+        return _response.read().decode(codemode)
+    
     
 def get_url_data(url , data = None,codemode = "gbk"):
     header = {}
