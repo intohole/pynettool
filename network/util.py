@@ -10,7 +10,8 @@ import time
 from jinja2._stringdefs import No
 
 code = {"gbk":"gbk",\
-        "utf-8":"utf-8"}
+        "utf-8":"utf-8",
+        "gb2312":"gb2312"}
 
 
 _jload = json.loads
@@ -36,7 +37,7 @@ def _get_url_data(baseurl , data = None ,header = {}, codemode = "gbk"):
     if _response:
         if not code.has_key(codemode):
             raise TaoBaoException("NO_RIGHT_DECODE",101)
-        return _response.read().decode(codemode)
+        return _response.read().decode(codemode,"in")
     
     
 def get_url_data(url , data = None,codemode = "gbk"):
@@ -118,7 +119,8 @@ def getjson(data):
 
 
 if __name__ == "__main__":
-    print getjson("jsonp(})")
+    for _key,_val in jsonstrtodict("""{"ret":1,"start":"58.240.48.0","end":"58.240.159.255","country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u4eac","district":"","isp":"\u8054\u901a","type":"","desc":""}""").items() :
+        print _val
 
 
 
