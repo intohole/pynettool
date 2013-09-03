@@ -7,7 +7,7 @@ from taobaoexception import TaoBaoException
 import json
 import random
 import time
-from jinja2._stringdefs import No
+
 
 code = {"gbk":"gbk",\
         "utf-8":"utf-8",
