@@ -11,6 +11,12 @@ class TrieNode(object):
         self.children = {}
 
 
+#词典树 
+#功能： 提高查询速度
+#方法： 
+#    add()
+#    search()
+
 
 class Trie(object):
     

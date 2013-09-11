@@ -26,13 +26,14 @@ def get_bd_ip_local(ip):
     query = {"query":ip,
             "co":"",
             "resource_id":"6006",
-            "t":"1376035704061",
+            "t":util.timems(),
             "ie":"utf8",
             "oe":"gbk",
             "cb":"bd__cbs__yk2g9h",
             "format":"json",
             "tn":"baidu"}
-    return util.get_url_info(query, ip_url , code = "gbk")
+    
+    return util.get_url_html_string(query, ip_url , code = "gbk")
 
 
 
@@ -44,7 +45,7 @@ def get_sina_ip_info(ip):
              "ip":ip,
              "t":util.timems()
              }
-    return util.get_url_info(query , ip_sina_url,code="gb2312")
+    return util.get_url_html_string(query , ip_sina_url,code="gb2312")
 
 def is_ip(ip):
     if ipregx.match(str(ip).strip()):
@@ -78,7 +79,7 @@ class test(threading.Thread):
             print util.getjson(get_bd_ip_local("220.181.111.86"))
             
 if __name__ == "__main__":
-    print get_sina_ip_location("218.2.129.53")
+    print get_bd_ip_local("218.2.129.53")
 
 
 

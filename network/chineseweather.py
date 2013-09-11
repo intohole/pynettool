@@ -48,7 +48,7 @@ class ChineseWeather(object):
     
     def _get_id(self,url):
         query =  {}
-        return util.get_url_info(query, url)
+        return util.get_url_html_string(query, url)
 
 if __name__ == "__main__":
     c = ChineseWeather()

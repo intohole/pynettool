@@ -125,20 +125,6 @@ def commentlist(itemid,tagid,page,posi):
         print e,d
         return None
     
-def writefile(filepath,data,mode = "a"):
-    fileHandle = open(filepath,mode)
-    fileHandle.write(data + "\n")
-    fileHandle.close()        
-
-
-def save(itemid):
-    for tag in getcommentinfo(util.jsonstrtodict(getjson(consumer_opinion(itemid)))):
-        time.sleep(1)
-        for i in range(1,tag[1]+1):
-            d = commentlist(itemid,tag[0],i,tag[2])
-            if  d:
-                for comment in d:
-                    writefile("/home//phone/_%s" % tag[3],"%s##%s" %(comment["position"] , comment["rateContent"]))
 
 if __name__ == "__main__":
     print list_dsr(21150040430)    

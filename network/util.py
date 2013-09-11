@@ -17,7 +17,7 @@ code = {"gbk":"gbk",\
 _jload = json.loads
 _urlencode = urllib.urlencode
 
-def _get_url_reponse(baseurl , data = None ,header = {}):
+def get_url_reponse(baseurl , data = None ,header = {}):
     _response = None
     req = urllib2.Request(baseurl)
     if header and isinstance(header, dict):
@@ -33,7 +33,7 @@ def _get_url_reponse(baseurl , data = None ,header = {}):
 
 
 def _get_url_data(baseurl , data = None ,header = {}, codemode = "gbk"):
-    _response = _get_url_reponse(baseurl , data ,header)
+    _response = get_url_reponse(baseurl , data ,header)
     if _response:
         if not code.has_key(codemode):
             raise TaoBaoException("NO_RIGHT_DECODE",101)
@@ -55,7 +55,7 @@ def get_url_data(url , data = None,codemode = "gbk"):
 原理：
     
 '''
-def get_url_info(query , base_url , data = None ,code="utf-8"):
+def get_url_html_string(query , base_url , data = None ,code="utf-8"):
     url = queryurl(base_url, query)
     return get_url_data(url,codemode = code , data= data)
 
