@@ -31,6 +31,9 @@ class ChineseWeather(object):
                         _cityname = idArry[3].strip() + idArry[2].strip() + idArry[1].strip()
                 self._trie.add(_cityname, _id)
         filehandle.close()
+        
+        
+        
     def _get_city_id(self, cityname , splitword = ' '):
         if not cityname and cityname.strip()=="":
             raise  TaoBaoException("INPUT_CITY_NAME_IS_NONE_OR_EMPTY",301)
