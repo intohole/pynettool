@@ -10,13 +10,14 @@ import time
 
 
 code = {"gbk":"gbk",\
-        "utf-8":"utf-8"}
+        "utf-8":"utf-8",
+        "gb2312":"gb2312"}
 
 
 _jload = json.loads
 _urlencode = urllib.urlencode
 
-def _get_url_reponse(baseurl , data = None ,header = {}):
+def get_url_reponse(baseurl , data = None ,header = {}):
     _response = None
     req = urllib2.Request(baseurl)
     if header and isinstance(header, dict):
@@ -32,11 +33,11 @@ def _get_url_reponse(baseurl , data = None ,header = {}):
 
 
 def _get_url_data(baseurl , data = None ,header = {}, codemode = "gbk"):
-    _response = _get_url_reponse(baseurl , data ,header)
+    _response = get_url_reponse(baseurl , data ,header)
     if _response:
         if not code.has_key(codemode):
             raise TaoBaoException("NO_RIGHT_DECODE",101)
-        return _response.read().decode(codemode)
+        return _response.read().decode(codemode,"in")
     
     
 def get_url_data(url , data = None,codemode = "gbk"):
@@ -54,7 +55,7 @@ def get_url_data(url , data = None,codemode = "gbk"):
 原理：
     
 '''
-def get_url_info(query , base_url , data = None ,code="utf-8"):
+def get_url_html_string(query , base_url , data = None ,code="utf-8"):
     url = queryurl(base_url, query)
     return get_url_data(url,codemode = code , data= data)
 
@@ -118,7 +119,8 @@ def getjson(data):
 
 
 if __name__ == "__main__":
-    print getjson("jsonp(})")
+    for _key,_val in jsonstrtodict("""{"ret":1,"start":"58.240.48.0","end":"58.240.159.255","country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u4eac","district":"","isp":"\u8054\u901a","type":"","desc":""}""").items() :
+        print _val
 
 
 

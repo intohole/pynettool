@@ -11,18 +11,18 @@ area_url = "http://shangqing.baidu.com/recomword/recomWordCache_findProvPvCache.
 
 def get_buinese_releate(word):
     query = {'word':word}
-    return util.get_url_info(query, releate_url, "utf-8")
+    return util.get_url_html_string(query, releate_url, "utf-8")
 
 
 def get_search_num(word):
     query = {"word":word}
-    return util.get_url_info(query, search_num_url, "utf-8")
+    return util.get_url_html_string(query, search_num_url, "utf-8")
 
 def get_area_info(word,num,areaid=''):
     query = {"word":word,
              "num":num,
              "area_id":areaid}
-    return util.get_url_info(query, area_url, code="utf-8")
+    return util.get_url_html_string(query, area_url, code="utf-8")
 
 
     
