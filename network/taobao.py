@@ -3,8 +3,9 @@
 
 
 
-import time
+import network
 import util
+
 
 queryurl = "http://rate.tmall.com/listTagClouds.htm?"
 detailurl = "http://rate.tmall.com/list_detail_rate.htm?"
@@ -28,7 +29,7 @@ def consumer_opinion(itemid):
              "_ksTS":"%s%s" % (t,util.randint(4)),
              "callback":"jsonp%s" % util.randint(4)}
     url = util.queryurl(queryurl , query)
-    return util.get_url_data(url, codemode = "gbk")
+    return network.get_html_string(url)
 
 #
 #
@@ -50,7 +51,7 @@ def consumer_comment(itemid,tagid,page,posi):
              "_ksTS":"1373940680057_1752",
              "callback":"jsonp1753"}
     url = util.queryurl(detailurl, query)
-    return util.get_url_data(url, codemode = "gbk")
+    return network.get_html_string(url)
 
 
 def get_comment(itemid,page,order=1,content=1,append=''):
@@ -62,7 +63,7 @@ def get_comment(itemid,page,order=1,content=1,append=''):
              "_ksTS":util.getksTs(),
              "callback":util.getJsonp()}
     url = util.queryurl(commenturl, query)
-    return util.get_url_data(url)
+    return network.get_html_string(url)
 #淘宝建议
 # word 任意字符串
 # 返回 
@@ -76,21 +77,21 @@ def suggest(word):
              "callback":util.getJsonp(),
              "k":"1"}
     url = util.queryurl(suggesturl, query)
-    return util.get_url_data(url, codemode = "utf-8")
+    return network.get_html_string(url)
 
 
 def getsellstatus(itemid):
     query = {"itemid":itemid,
              "callback":"TShop.mods.DealRecord.reload"}
     url = util.queryurl(suggesturl, query)
-    return util.get_url_data(url)
+    return network.get_html_string(url)
 
 def list_dsr(itemid):
     query = {"itemId":itemid,
              "_ksTS":util.getksTs(),
              "callback":util.getJsonp()}
     url = util.queryurl(iteminfo, query)
-    return util.get_url_data(url)
+    return network.get_html_string(url)
        
     
 def getjson(data):
@@ -127,4 +128,4 @@ def commentlist(itemid,tagid,page,posi):
     
 
 if __name__ == "__main__":
-    print list_dsr(21150040430)    
+    print suggest('天')    

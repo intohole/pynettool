@@ -27,7 +27,7 @@ class Trie(object):
     
     def add(self , words , value):
         node = self.root
-        for word in words.decode("utf-8"):
+        for word in words.decode("utf-8").encode("utf-8"):
             if node.children.has_key(word):
                 node = node.children[word]
             else:
@@ -42,7 +42,7 @@ class Trie(object):
         _id = None
         _word = ''
         _add = ''
-        for word in words.decode("utf-8"):
+        for word in words.decode("utf-8").encode("utf-8"):
             if not node.children.has_key(word):
                 break
             else:
@@ -57,12 +57,4 @@ class Trie(object):
 if __name__ == "__main__":
     t = Trie()
     t.add("我爱天安门", 1)
-    print t.search("他爱")
-    
-                
-        
-                
-                
-            
-        
-        
+    print t.search("我爱天安门")

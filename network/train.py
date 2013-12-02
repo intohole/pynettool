@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 import util
-import json
+import network
 
 
 train_url = "http://train.qunar.com/qunar/stationtostation.jsp?"
@@ -13,14 +13,12 @@ def train(_from , _dest):
              "to":_dest,
              "type":"oneway",
              "date":"20131016",
-             "ver":"1381732624162",
+             "ver":util.timems(),
              "ex_track":"",
              "cityname":"123456",
              "callback":"XQScript_5"}
     
-    return util.getjson(util.get_url_html_string(query, train_url))
+    return util.getjson(network.get_html_string(train_url, query))
 
 if __name__ == "__main__":
-    for _key,_val in  json.loads(train("北京" , "武汉")).items():
-        print _key,_val
-
+    print util.jsonstrtodict(train("北京" , "武汉"))

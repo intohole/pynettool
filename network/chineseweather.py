@@ -4,7 +4,7 @@
 import util 
 from Trie import Trie
 from taobaoexception import TaoBaoException
-
+import network
 
 class ChineseWeather(object):
     
@@ -51,8 +51,8 @@ class ChineseWeather(object):
     
     def _get_id(self,url):
         query =  {}
-        return util.get_url_html_string(query, url)
+        return network.get_html_string(url , query)
 
 if __name__ == "__main__":
     c = ChineseWeather()
-    print c.get_city_weather("北京海")
+    print c.get_city_weather("北京".encode("utf-8"))
