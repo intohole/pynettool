@@ -6,6 +6,7 @@ import urllib
 import urllib2
 import re
 import sys
+import cookielib
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -75,9 +76,28 @@ def get_html_charset(html):
     return __codeing
 
 
-def set_urllib_proxy():
+def set_urllib_proxy(protocol  , proxy_string):
+    if not (protocol and isinstance(protocol ,(str)) and protocol.lower() in ['http' , 'https' , '' ]):
+        raise TypeError,'protocol'
+    if len(protocol) == 0:
+        __proxy = urllib2.ProxyHandler({})
+    else:
+        __proxy = urllib2.ProxyHandler({protocol : proxy_string})
+    urllib2.install_opener(__proxy)
+
+
+def set_time_out(delay):
+    urllib2.socket.setdefaulttimeout(delay)
+
+
+def get_cookie(filename , method = 'save'):
+    if method == save:
+        __cookie = cookielib.FileCookieJar()
     pass
 
+    
+
+    
 
 if __name__ == '__main__':
     print get_html_string('http://news.baidu.com')
