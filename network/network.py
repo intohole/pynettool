@@ -10,7 +10,7 @@ import cookielib
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-lang_detect = re.compile("charset=[a-zA-Z0-9]+\">", re.IGNORECASE)
+lang_detect = re.compile("(charset\\s?=\\s?|encoding=\")([\w\d-]+)(\")?", re.IGNORECASE)
 
 
 class UtilException(Exception):
@@ -71,8 +71,8 @@ def get_html_charset(html):
     __code = lang_detect.search(html)
     __codeing = "utf-8"
     if __code:
-        __code = __code.group()
-        __codeing = __code.split("charset=")[1].split("\"")[0]
+        __codeing = __code.group(2).strip()
+        # __codeing = __code.split("charset=")[1].split("\"")[0]
     return __codeing
 
 
