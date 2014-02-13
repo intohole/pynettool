@@ -1,6 +1,7 @@
 #coding=utf-8
 
 
+
 import util
 from Trie import Trie
 from taobaoexception import TaoBaoException
@@ -78,3 +79,4 @@ if __name__ == "__main__":
     c = ChineseWeather()
     for i in c.get_city_weather("江苏南京江宁".encode("utf-8")):
         print i
+

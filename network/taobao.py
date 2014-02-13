@@ -3,9 +3,9 @@
 
 
 
-import json
-import time
+import network
 import util
+
 
 queryurl = "http://rate.tmall.com/listTagClouds.htm?"
 detailurl = "http://rate.tmall.com/list_detail_rate.htm?"
@@ -14,7 +14,13 @@ commenturl = "http://rate.tmall.com/list_detail_rate.htm?"
 iteminfo = "http://rate.tmall.com/list_dsr_info.htm?"
 sellstatus = 'http://ext.mdskip.taobao.com/extension/dealRecords.htm?'
 
-def makequery(itemid):
+#函数名称 consumer_opinion(itemid):
+#函数功能 获得淘宝客户的意见评论
+#参数：
+#    itemid 淘宝商品id
+#返回：
+#    json字符串 买家意见总结
+def consumer_opinion(itemid):
     t = util.timems()
     query = {"itemId":itemid,
              "isAll":"true",
@@ -23,9 +29,18 @@ def makequery(itemid):
              "_ksTS":"%s%s" % (t,util.randint(4)),
              "callback":"jsonp%s" % util.randint(4)}
     url = util.queryurl(queryurl , query)
-    return util.get_url_data(url, codemode = "gbk")
+    return network.get_html_string(url)
 
-def makecomment(itemid,tagid,page,posi):
+#
+#
+#买家评论列表
+#返回 json字符串
+# itemid 商品id
+# tagid 意见id
+# page 页数
+# posi
+#
+def consumer_comment(itemid,tagid,page,posi):
     query = {"itemId":itemid,
              "order":"1",
              "currentPage":page,
@@ -36,7 +51,8 @@ def makecomment(itemid,tagid,page,posi):
              "_ksTS":"1373940680057_1752",
              "callback":"jsonp1753"}
     url = util.queryurl(detailurl, query)
-    return util.get_url_data(url, codemode = "gbk")
+    return network.get_html_string(url)
+
 
 def get_comment(itemid,page,order=1,content=1,append=''):
     query = {"itemId":itemid,
@@ -47,7 +63,11 @@ def get_comment(itemid,page,order=1,content=1,append=''):
              "_ksTS":util.getksTs(),
              "callback":util.getJsonp()}
     url = util.queryurl(commenturl, query)
-    return util.get_url_data(url)
+    return network.get_html_string(url)
+#淘宝建议
+# word 任意字符串
+# 返回 
+#    json字符串
 
 def suggest(word):
     query = {
@@ -57,21 +77,21 @@ def suggest(word):
              "callback":util.getJsonp(),
              "k":"1"}
     url = util.queryurl(suggesturl, query)
-    return util.get_url_data(url, codemode = "utf-8")
+    return network.get_html_string(url)
 
 
 def getsellstatus(itemid):
     query = {"itemid":itemid,
              "callback":"TShop.mods.DealRecord.reload"}
     url = util.queryurl(suggesturl, query)
-    return util.get_url_data(url)
+    return network.get_html_string(url)
 
 def list_dsr(itemid):
     query = {"itemId":itemid,
              "_ksTS":util.getksTs(),
              "callback":util.getJsonp()}
     url = util.queryurl(iteminfo, query)
-    return util.get_url_data(url)
+    return network.get_html_string(url)
        
     
 def getjson(data):
@@ -79,13 +99,7 @@ def getjson(data):
     return data
 
 
-def jsonstrtodict(jsonstr):
-    datadict = None
-    try:
-        datadict = json.loads(jsonstr)
-    except Exception,e:
-        print e
-    return datadict                
+          
 
 def getcommentinfo(tagdict):
     if not isinstance(tagdict,dict):
@@ -103,7 +117,7 @@ def getcommentinfo(tagdict):
     return None
 
 def commentlist(itemid,tagid,page,posi):
-    d = jsonstrtodict(getjson(makecomment(itemid,tagid,page,posi)))
+    d = util.jsonstrtodict(util.getjson(consumer_opinion(itemid,tagid,page,posi)))
     try:
         if  d and d.has_key("rateDetail"):
             if d["rateDetail"].has_key("rateList"):
@@ -112,20 +126,6 @@ def commentlist(itemid,tagid,page,posi):
         print e,d
         return None
     
-def writefile(filepath,data,mode = "a"):
-    fileHandle = open(filepath,mode)
-    fileHandle.write(data + "\n")
-    fileHandle.close()        
-
-
-def save(itemid):
-    for tag in getcommentinfo(jsonstrtodict(getjson(makequery(itemid)))):
-        time.sleep(1)
-        for i in range(1,tag[1]+1):
-            d = commentlist(itemid,tag[0],i,tag[2])
-            if  d:
-                for comment in d:
-                    writefile("/home/lixuze/phone/_%s" % tag[3],"%s##%s" %(comment["position"] , comment["rateContent"]))
 
 if __name__ == "__main__":
-    print getsellstatus(19399255654)    
+    print suggest('天')    
