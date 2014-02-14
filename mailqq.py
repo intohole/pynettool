@@ -33,7 +33,6 @@ class QQBottele(object):
         _data = urllib.urlencode(data)
         _req = urllib2.Request('http://w.mail.qq.com/cgi-bin/login'  , header)
         urllib2.urlopen(_req, _data).read().decode("utf-8")
-        _req.
         html = util._get_url_data('http://w.mail.qq.com/cgi-bin/login', data, header,"utf-8")
         m = redirect.search(html)
         _url = None

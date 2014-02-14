@@ -2,10 +2,9 @@
 
 
 
-import util
-from Trie import Trie
-from taobaoexception import TaoBaoException
-import network
+from utils import util
+from utils import Trie
+from utils import network
 import json
 
 week_name = ( '一' , '二' , '三' , '四' , '五' , '六' , '日')
@@ -24,7 +23,7 @@ class WeatherInfo(object):
 
 class ChineseWeather(object):
 
-    __trie = Trie()
+    __trie = Trie.Trie()
 
     def __init__(self):
         self.load_city_id()
@@ -48,7 +47,7 @@ class ChineseWeather(object):
 
     def get_city_id(self, cityname , splitword = ' '):
         if not cityname and cityname.strip()=="":
-            raise  TaoBaoException("INPUT_CITY_NAME_IS_NONE_OR_EMPTY",301)
+            raise  Exception("INPUT_CITY_NAME_IS_NONE_OR_EMPTY")
         __searchword = ''.join(cityname.split(splitword))
         return self.__trie.search(__searchword)
 

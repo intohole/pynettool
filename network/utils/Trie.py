@@ -1,7 +1,8 @@
 #coding=utf-8
 #!/usr/bin/env python
-
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
 class TrieNode(object):
@@ -27,7 +28,7 @@ class Trie(object):
     
     def add(self , words , value):
         node = self.root
-        for word in words.decode("utf-8").encode("utf-8"):
+        for word in words.decode("utf-8").encode('utf-8'):
             if node.children.has_key(word):
                 node = node.children[word]
             else:

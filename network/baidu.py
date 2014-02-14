@@ -4,15 +4,14 @@
 import threading
 import util
 import re
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+import network
 
 
 ipregx = re.compile("[0-9]{1,3}(\.[0-9]{1,3}){3}", re.UNICODE)
 suggesturl = 'http://esug.baidu.com/su?'
 ip_url = "http://opendata.baidu.com/api.php?"
 ip_sina_url = "http://counter.sina.com.cn/ip?"
+
 
 sina_regx = re.compile("Array\([^)]*\)")
 
@@ -21,8 +20,7 @@ def get_suggest_word(word):
     query = {"wd": word,
              "p": 3,
              "t": util.timems()}
-    url = util.queryurl(suggesturl, query)
-    return util.get_url_data(url, "")
+    return network.get_html_string(baseurl=suggesturl, data=query)
 
 
 def get_bd_ip_local(ip):
@@ -36,7 +34,7 @@ def get_bd_ip_local(ip):
              "format": "json",
              "tn": "baidu"}
 
-    return util.get_url_html_string(query, ip_url, code="gbk")
+    return network.get_html_string(ip_url, query)
 
 
 def get_ip_location(ip):
@@ -48,7 +46,11 @@ def get_sina_ip_info(ip):
         "ip": ip,
         "t": util.timems()
     }
-    return util.get_url_html_string(query, ip_sina_url, code="gb2312")
+    header = {
+        "Host": "counter.sina.com.cn",
+        "Referer": "http://biz.finance.sina.com.cn/baishi/ip.php"
+    }
+    return network.get_html_string(ip_sina_url, query, header)
 
 
 def is_ip(ip):
@@ -83,4 +85,5 @@ class test(threading.Thread):
             print util.getjson(get_bd_ip_local("220.181.111.86"))
 
 if __name__ == "__main__":
-    print get_sina_ip_location("218.2.129.53")
+    print network.get_html_string('http://counter.sina.com.cn/ip?ip=220.181.111.85&t=1392362718869', {}).encode("utf-8")
+    print get_sina_ip_info("221.5.66.32")

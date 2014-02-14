@@ -76,8 +76,7 @@ def suggest(word):
              "_ksTS":util.getksTs(),
              "callback":util.getJsonp(),
              "k":"1"}
-    url = util.queryurl(suggesturl, query)
-    return network.get_html_string(url)
+    return network.get_html_string(baseurl =suggesturl , data = query)
 
 
 def getsellstatus(itemid):
@@ -128,4 +127,4 @@ def commentlist(itemid,tagid,page,posi):
     
 
 if __name__ == "__main__":
-    print suggest('天')    
+    print suggest('袜')

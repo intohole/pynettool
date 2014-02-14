@@ -6,7 +6,6 @@ import urllib
 import urllib2
 import re
 import sys
-import cookielib
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -36,9 +35,6 @@ class NoDataReturn(UtilException):
 
 def get_url_reponse(baseurl, data=None, header={}):
     _response = None
-    if baseurl:
-        if not baseurl.endswith('?'):
-            baseurl = baseurl + '?'
     req = urllib2.Request(baseurl)
     if header and isinstance(header, dict):
         for _key, _val in header.items():
@@ -46,7 +42,7 @@ def get_url_reponse(baseurl, data=None, header={}):
     if data:
         if isinstance(data, dict):
             data = urllib.urlencode(data)
-        _response = urllib2.urlopen(req, data)
+        _response = urllib2.urlopen(req,data)
     else:
         _response = urllib2.urlopen(req)
     return _response
@@ -90,10 +86,6 @@ def set_time_out(delay):
     urllib2.socket.setdefaulttimeout(delay)
 
 
-def get_cookie(filename , method = 'save'):
-    if method == save:
-        __cookie = cookielib.FileCookieJar()
-    pass
 
     
 
