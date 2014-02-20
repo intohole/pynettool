@@ -1,7 +1,6 @@
 # coding=utf-8
 
 
-from taobaoexception import TaoBaoException
 import json
 import random
 import time
