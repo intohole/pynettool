@@ -37,3 +37,12 @@ pynet 接口
           print p.baidu_area_num(word='htc', num=10, areaid='') #查询搜索词区域数目
           print p.sina_ip(ip='220.181.111.86') #查询ip信息 
           print p.sina_phone(m='13833445577') #查询电话信息
+
+
+loster.py 空气质量接口pm25.in 网站接口
+-----------------
+:::python
+     
+     from loster import PM25
+     p = PM25(base_url = 'http://www.pm25.in/api/querys/' , token  = '5j1znBVAsnSf5xQyNQyq')
+    print p.pm2_5(city = '南京')

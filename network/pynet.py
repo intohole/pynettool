@@ -7,7 +7,6 @@ from utils import util
 import json
 import urllib
 
-
 _net_dict = {'sina_ip':
             {'query': {'format': 'text'}, 'base_url':
              'http://int.dpool.sina.com.cn/iplookup/iplookup.php?'},
@@ -25,7 +24,10 @@ _net_dict = {'sina_ip':
              'http://shangqing.baidu.com/recomword/recomWordCache_findProvPvCache.htm?'},
              'sina_phone':
             {'query': {'output': 'json'}, 'base_url':
-             'http://api.showji.com/Locating/www.showji.co.m.aspx?'}
+             'http://api.showji.com/Locating/www.showji.co.m.aspx?'},
+             'baidu_suggest':
+             {'query': {'sid': ''},
+                 'base_url': 'http://suggestion.baidu.com/su?'}
              }
 
 
@@ -33,6 +35,7 @@ class PyNet(object):
 
     def __get_response(self, url, **kw):
         http_get_url = url + self.__encode_params(**kw)
+        print http_get_url
         __response = network.get_html_string(http_get_url)
         if __response:
             return __response
@@ -42,6 +45,8 @@ class PyNet(object):
     def __encode_params(self, **kw):
         args = []
         for k, v in kw.iteritems():
+            if callable(v):
+                v = v()
             qv = v.encode('utf-8') if isinstance(v, unicode) else str(v)
             args.append('%s=%s' % (k, urllib.quote(qv)))
         return '&'.join(args)
@@ -69,4 +74,4 @@ if __name__ == '__main__':
     print p.baidu_area_num(word='htc', num=10, areaid='')
     print p.sina_ip(ip='220.181.111.86')
     print p.sina_phone(m='13833445577')
-    # print p.youdao_ip(q = '220.181.111.86')
+    print p.baidu_suggest(wd='天气' , _ = util.timems())

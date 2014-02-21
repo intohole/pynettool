@@ -32,7 +32,11 @@ class PM25(object):
 		__callurl = url + self.__encode_params(**kw)
 		__response = network.get_html_string(__callurl)
 		if __response:
-			return json.loads(__response)
+			json_result = json.loads(__response)
+			if json_result and json_result.has_key('error'):
+				raise Exception('service isn\'t run well : %s' % json_result['error'])
+			else:
+				return json_result
 		else:
 			raise NetException,__callurl
 
