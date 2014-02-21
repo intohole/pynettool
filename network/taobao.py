@@ -1,10 +1,10 @@
 #coding=utf-8
+#!/usr/bin/env python
 
 
 
-
-import network
-import util
+from utils import network
+from utils import util
 
 
 queryurl = "http://rate.tmall.com/listTagClouds.htm?"

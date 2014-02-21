@@ -68,7 +68,6 @@ def get_html_charset(html):
     __codeing = "utf-8"
     if __code:
         __codeing = __code.group(2).strip()
-        # __codeing = __code.split("charset=")[1].split("\"")[0]
     return __codeing
 
 
