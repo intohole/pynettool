@@ -28,4 +28,4 @@ def get_ip_local():
 
 
 if __name__ == '__main__':
-	print get_ip_local()
+	print get_ip_location_youdao('220.181.111.86')

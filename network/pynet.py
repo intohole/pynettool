@@ -65,3 +65,8 @@ class PyNet(object):
 if __name__ == '__main__':
     p = PyNet()
     print p.baidu_search_num(word='htc')
+    print p.baidu_releate(word='htc')
+    print p.baidu_area_num(word='htc', num=10, areaid='')
+    print p.sina_ip(ip='220.181.111.86')
+    print p.sina_phone(m='13833445577')
+    # print p.youdao_ip(q = '220.181.111.86')

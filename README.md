@@ -23,3 +23,17 @@ pynettool说明
     print bd.get_buinese_releate("三星"  ) 
     print bd.get_search_num('三星')
     print bd.get_area_info('三星' , 10 )
+
+
+pynet 接口
+------------------------------
+:::python
+  
+     from pynet import PyNet
+     if __name__ == '__main__':
+          p = PyNet()
+          print p.baidu_search_num(word='htc') #查询百度搜索词的次数
+          print p.baidu_releate(word='htc') #查询相关查询
+          print p.baidu_area_num(word='htc', num=10, areaid='') #查询搜索词区域数目
+          print p.sina_ip(ip='220.181.111.86') #查询ip信息 
+          print p.sina_phone(m='13833445577') #查询电话信息
