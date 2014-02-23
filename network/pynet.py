@@ -39,6 +39,28 @@ _net_dict = {'sina_ip':
 
 class PyNet(object):
 
+    __get_rule = {}
+
+
+    def __init__(self , rule_dict = _net_dict):
+        if rule_dict and isinstance(rule_dict , dict):
+            self.__get_rule = rule_dict.copy()
+        else:
+            self.__get_rule = _net_dict.copy()
+
+    def add_rule(self , rule ):
+        if rule and isinstance(rule , dict):
+            for __name , __rule in rule.items():
+                if self.__get_rule.has_key(__name) or not __rule or not isinstance(__rule , dict):
+                    continue
+                if rule[__name].has_key('base_url') and isinstance(rule['base_url'] , (str , unicode)):
+                    self.__get_rule[__name] = __rule
+        else:
+            raise TypeErro('rule must be dict eg. {xx:{\'query\' :{} , \'base_url\' : \'xxx\'} }')
+
+
+
+
     def __get_response(self, url, **kw):
         http_get_url = url + self.__encode_params(**kw)
         __response = network.get_html_string(http_get_url)
@@ -56,15 +78,15 @@ class PyNet(object):
 
     def __getattr__(self, key):
         def wrap(**kw):
-            if _net_dict.has_key(key):
-                if _net_dict[key].has_key('base_url'):
-                    __url = _net_dict[key]['base_url']
+            if self.__get_rule.has_key(key):
+                if self.__get_rule[key].has_key('base_url'):
+                    __url = self.__get_rule[key]['base_url']
                 else:
                     raise Exception('%s not contain base_url' % key)
             else:
                 raise Exception('%s can\'t find service' % key)
-            if _net_dict[key].has_key('query'):
-                for __key, __val in _net_dict[key]['query'].items():
+            if self.__get_rule[key].has_key('query'):
+                for __key, __val in self.__get_rule[key]['query'].items():
                     kw[__key] = __val
             return self.__get_response(url=__url, **kw)
         return wrap
