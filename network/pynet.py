@@ -27,7 +27,9 @@ _net_dict = {'sina_ip':
              'http://api.showji.com/Locating/www.showji.co.m.aspx?'},
              'baidu_suggest':
              {'query': {'sid': ''},
-                 'base_url': 'http://suggestion.baidu.com/su?'}
+                 'base_url': 'http://suggestion.baidu.com/su?'} ,
+             'youdao_fanyi':
+             {'query' : {'keyfrom':'tinxing','key':'1312427901','type':'data','doctype':'json','version':'1.1'} , 'base_url' : 'http://fanyi.youdao.com/openapi.do?'}
              }
 
 
@@ -45,8 +47,6 @@ class PyNet(object):
     def __encode_params(self, **kw):
         args = []
         for k, v in kw.iteritems():
-            if callable(v):
-                v = v()
             qv = v.encode('utf-8') if isinstance(v, unicode) else str(v)
             args.append('%s=%s' % (k, urllib.quote(qv)))
         return '&'.join(args)
@@ -75,3 +75,4 @@ if __name__ == '__main__':
     print p.sina_ip(ip='220.181.111.86')
     print p.sina_phone(m='13833445577')
     print p.baidu_suggest(wd='天气' , _ = util.timems())
+    print p.youdao_fanyi(q = 'word')

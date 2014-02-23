@@ -37,6 +37,8 @@ pynet 接口
           print p.baidu_area_num(word='htc', num=10, areaid='') #查询搜索词区域数目
           print p.sina_ip(ip='220.181.111.86') #查询ip信息 
           print p.sina_phone(m='13833445577') #查询电话信息
+          print p.youdao_fanyi(q = 'word') #有道翻译接口
+          print p.baidu_suggest(wd='天气' , _ = util.timems()) #百度建议词接口
 
 
 loster.py 空气质量接口pm25.in 网站接口
