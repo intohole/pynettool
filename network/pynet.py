@@ -27,9 +27,13 @@ _net_dict = {'sina_ip':
              'http://api.showji.com/Locating/www.showji.co.m.aspx?'},
              'baidu_suggest':
              {'query': {'sid': ''},
-                 'base_url': 'http://suggestion.baidu.com/su?'} ,
+                 'base_url': 'http://suggestion.baidu.com/su?'},
              'youdao_fanyi':
-             {'query' : {'keyfrom':'tinxing','key':'1312427901','type':'data','doctype':'json','version':'1.1'} , 'base_url' : 'http://fanyi.youdao.com/openapi.do?'}
+             {'query': {'keyfrom': 'tinxing', 'key': '1312427901', 'type': 'data', 'doctype':
+                        'json', 'version': '1.1'}, 'base_url': 'http://fanyi.youdao.com/openapi.do?'},
+             'kuaidi':
+             {'base_url': 'http://baidu.kuaidi100.com/query?'}
+
              }
 
 
@@ -37,7 +41,6 @@ class PyNet(object):
 
     def __get_response(self, url, **kw):
         http_get_url = url + self.__encode_params(**kw)
-        print http_get_url
         __response = network.get_html_string(http_get_url)
         if __response:
             return __response
@@ -74,5 +77,8 @@ if __name__ == '__main__':
     print p.baidu_area_num(word='htc', num=10, areaid='')
     print p.sina_ip(ip='220.181.111.86')
     print p.sina_phone(m='13833445577')
-    print p.baidu_suggest(wd='天气' , _ = util.timems())
-    print p.youdao_fanyi(q = 'word')
+    print p.baidu_suggest(wd='天气', _=util.timems())
+    print p.youdao_fanyi(q='word')
+    print p.kuaidi(type = 'huitongkuaidi' , postid = '350146137409')
+    print p.kuaidi(type = 'shentong' , postid='768089232106')
+    print p.kuaidi(type = 'shunfeng' , postid = '574869634762')
