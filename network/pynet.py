@@ -6,6 +6,7 @@ from utils import network
 from utils import util
 import json
 import urllib
+import time
 
 _net_dict = {'sina_ip':
             {'query': {'format': 'text'}, 'base_url':
@@ -26,14 +27,19 @@ _net_dict = {'sina_ip':
             {'query': {'output': 'json'}, 'base_url':
              'http://api.showji.com/Locating/www.showji.co.m.aspx?'},
              'baidu_suggest':
-             {'query': {'sid': ''},
+             {'query': {'sid': '', '_': util.timems},
                  'base_url': 'http://suggestion.baidu.com/su?'},
              'youdao_fanyi':
              {'query': {'keyfrom': 'tinxing', 'key': '1312427901', 'type': 'data', 'doctype':
                         'json', 'version': '1.1'}, 'base_url': 'http://fanyi.youdao.com/openapi.do?'},
              'kuaidi':
-             {'base_url': 'http://baidu.kuaidi100.com/query?'}
-
+             {'base_url': 'http://baidu.kuaidi100.com/query?'},
+             'news':
+             {'query': {"category": "__all__",
+                        "count": "20",
+                        "offset": "0",
+                        "utm_source": "toutiao",
+                        }, 'base_url': 'http://www.toutiao.com/api/article/recent/?'}
              }
 
 
@@ -41,25 +47,22 @@ class PyNet(object):
 
     __get_rule = {}
 
-
-    def __init__(self , rule_dict = _net_dict):
-        if rule_dict and isinstance(rule_dict , dict):
+    def __init__(self, rule_dict=_net_dict):
+        if rule_dict and isinstance(rule_dict, dict):
             self.__get_rule = rule_dict.copy()
         else:
             self.__get_rule = _net_dict.copy()
 
-    def add_rule(self , rule ):
-        if rule and isinstance(rule , dict):
-            for __name , __rule in rule.items():
-                if self.__get_rule.has_key(__name) or not __rule or not isinstance(__rule , dict):
+    def add_rule(self, rule):
+        if rule and isinstance(rule, dict):
+            for __name, __rule in rule.items():
+                if self.__get_rule.has_key(__name) or not __rule or not isinstance(__rule, dict):
                     continue
-                if rule[__name].has_key('base_url') and isinstance(rule['base_url'] , (str , unicode)):
+                if rule[__name].has_key('base_url') and isinstance(rule['base_url'], (str, unicode)):
                     self.__get_rule[__name] = __rule
         else:
-            raise TypeErro('rule must be dict eg. {xx:{\'query\' :{} , \'base_url\' : \'xxx\'} }')
-
-
-
+            raise TypeErro(
+                'rule must be dict eg. {xx:{\'query\' :{} , \'base_url\' : \'xxx\'} }')
 
     def __get_response(self, url, **kw):
         http_get_url = url + self.__encode_params(**kw)
@@ -72,6 +75,10 @@ class PyNet(object):
     def __encode_params(self, **kw):
         args = []
         for k, v in kw.iteritems():
+            if callable(v):
+                print 'function'
+                v = v()
+                print v
             qv = v.encode('utf-8') if isinstance(v, unicode) else str(v)
             args.append('%s=%s' % (k, urllib.quote(qv)))
         return '&'.join(args)
@@ -99,8 +106,9 @@ if __name__ == '__main__':
     print p.baidu_area_num(word='htc', num=10, areaid='')
     print p.sina_ip(ip='220.181.111.86')
     print p.sina_phone(m='13833445577')
-    print p.baidu_suggest(wd='天气', _=util.timems())
+    print p.baidu_suggest(wd='天气')
     print p.youdao_fanyi(q='word')
-    print p.kuaidi(type = 'huitongkuaidi' , postid = '350146137409')
-    print p.kuaidi(type = 'shentong' , postid='768089232106')
-    print p.kuaidi(type = 'shunfeng' , postid = '574869634762')
+    print p.kuaidi(type='huitongkuaidi', postid='350146137409')
+    print p.kuaidi(type='shentong', postid='768089232106')
+    print p.kuaidi(type='shunfeng', postid='574869634762')
+    print p.news()
