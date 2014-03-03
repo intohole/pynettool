@@ -41,7 +41,19 @@ _net_dict = {'sina_ip':
                         "utm_source": "toutiao",
                         }, 'base_url': 'http://www.toutiao.com/api/article/recent/?'},
              'xunlei':
-            {'call_back': util.xunlei}
+            {'call_back': util.xunlei},
+             'dianxin_phone':
+            {'query': {"areaId": "10",
+                       "areaCode": "025",
+                       "numberHead": "",
+                       "showCount": "16",
+                       "isFour": "",
+                       "matchNum": "tailNotFour",
+                       "numberFee": "",
+                       "maxStoredCalls": "",
+                       "numTypeReg": ""}, 'base_url':
+                'http://js.189.cn/nmall/shop/number/queryNumber.json?'}
+
              }
 
 
@@ -78,9 +90,7 @@ class PyNet(object):
         args = []
         for k, v in kw.iteritems():
             if callable(v):
-                print 'function'
                 v = v()
-                print v
             qv = v.encode('utf-8') if isinstance(v, unicode) else str(v)
             args.append('%s=%s' % (k, urllib.quote(qv)))
         return '&'.join(args)
@@ -105,15 +115,16 @@ class PyNet(object):
 
 if __name__ == '__main__':
     p = PyNet()
-    print p.baidu_search_num(word='htc')
-    print p.baidu_releate(word='htc')
-    print p.baidu_area_num(word='htc', num=10, areaid='')
-    print p.sina_ip(ip='220.181.111.86')
-    print p.sina_phone(m='13833445577')
-    print p.baidu_suggest(wd='天气')
-    print p.youdao_fanyi(q='word')
-    print p.kuaidi(type='huitongkuaidi', postid='350146137409')
-    print p.kuaidi(type='shentong', postid='768089232106')
-    print p.kuaidi(type='shunfeng', postid='574869634762')
-    print p.news()
-    print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
+    # print p.baidu_search_num(word='htc')
+    # print p.baidu_releate(word='htc')
+    # print p.baidu_area_num(word='htc', num=10, areaid='')
+    # print p.sina_ip(ip='220.181.111.86')
+    # print p.sina_phone(m='13833445577')
+    # print p.baidu_suggest(wd='天气')
+    # print p.youdao_fanyi(q='word')
+    # print p.kuaidi(type='huitongkuaidi', postid='350146137409')
+    # print p.kuaidi(type='shentong', postid='768089232106')
+    # print p.kuaidi(type='shunfeng', postid='574869634762')
+    # print p.news()
+    # print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
+    print p.dianxin_phone(areaCode = '025' ,  areaId = '10')
