@@ -39,7 +39,10 @@ pynet 接口
           print p.sina_phone(m='13833445577') #查询电话信息
           print p.youdao_fanyi(q = 'word') #有道翻译接口
           print p.baidu_suggest(wd='天气' , _ = util.timems()) #百度建议词接口
-          print print p.kuaidi(type = 'shunfeng' , postid = '574869634762') # 快递接口查询 type : 快递名称 , postid : 快递单号 type {'shentong' : '申通' , 'shunfeng' : '顺风' , 'huitongkuaidi' : '汇通快递' , 'zhongtong' : '中通' , 'yunda' : '韵达'} ....更多快递名称你发现
+          print p.kuaidi(type = 'shunfeng' , postid = '574869634762') # 快递接口查询 type : 快递名称 , postid : 快递单号 type {'shentong' : '申通' , 'shunfeng' : '顺风' , 'huitongkuaidi' : '汇通快递' , 'zhongtong' : '中通' , 'yunda' : '韵达'} ....更多快递名称你发现
+          print p.news() # 新闻获得
+          print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/') # url = 迅雷地址 迅雷地址转换
+
 
 
 loster.py 空气质量接口pm25.in 网站接口

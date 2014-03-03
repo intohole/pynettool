@@ -39,7 +39,9 @@ _net_dict = {'sina_ip':
                         "count": "20",
                         "offset": "0",
                         "utm_source": "toutiao",
-                        }, 'base_url': 'http://www.toutiao.com/api/article/recent/?'}
+                        }, 'base_url': 'http://www.toutiao.com/api/article/recent/?'},
+             'xunlei':
+            {'call_back': util.xunlei}
              }
 
 
@@ -58,7 +60,7 @@ class PyNet(object):
             for __name, __rule in rule.items():
                 if self.__get_rule.has_key(__name) or not __rule or not isinstance(__rule, dict):
                     continue
-                if rule[__name].has_key('base_url') and isinstance(rule['base_url'], (str, unicode)):
+                if (rule[__name].has_key('base_url') and isinstance(rule['base_url'], (str, unicode))) or rule[__name].has_key('call_back'):
                     self.__get_rule[__name] = __rule
         else:
             raise TypeErro(
@@ -86,6 +88,8 @@ class PyNet(object):
     def __getattr__(self, key):
         def wrap(**kw):
             if self.__get_rule.has_key(key):
+                if self.__get_rule[key].has_key('call_back'):
+                    return self.__get_rule[key]['call_back'](**kw)
                 if self.__get_rule[key].has_key('base_url'):
                     __url = self.__get_rule[key]['base_url']
                 else:
@@ -112,3 +116,4 @@ if __name__ == '__main__':
     print p.kuaidi(type='shentong', postid='768089232106')
     print p.kuaidi(type='shunfeng', postid='574869634762')
     print p.news()
+    print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')

@@ -5,11 +5,10 @@ import json
 import random
 import time
 import re
+import base64
 
 
-code = {"gbk": "gbk",
-        "utf-8": "utf-8",
-        "gb2312": "gb2312"}
+
 
 
 _jload = json.loads
@@ -79,9 +78,19 @@ def getjson(data):
     return data[data.index("{"):data.rindex("}") + 1]
 
 
+def xunlei(**kw):
+    
+    if kw.has_key('url'):
+        url = kw['url']
+    else:
+        return ''
+    if url and isinstance(url , (str , unicode)) and url.startswith('thunder://'):
+        __url = base64.decodestring(url[10:])
+        #去除掉迅雷 AA***ZZ
+        return __url[2:-2]
+
+
+
+
 if __name__ == "__main__":
-    for _key, _val in jsonstrtodict("""{"ret":1,"start":"58.240.48.0","end":"58.240.159.255","country":"\u4e2d\u56fd","province":"\u6c5f\u82cf","city":"\u5357\u4eac","district":"","isp":"\u8054\u901a","type":"","desc":""}""").items() :
-        if isinstance(_val, (unicode, str)):
-            print _val.encode('utf-8')
-        else:
-            print _val
+    print xunlei(url = 'thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
