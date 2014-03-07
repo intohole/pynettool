@@ -42,6 +42,9 @@ pynet 接口
           print p.kuaidi(type = 'shunfeng' , postid = '574869634762') # 快递接口查询 type : 快递名称 , postid : 快递单号 type {'shentong' : '申通' , 'shunfeng' : '顺风' , 'huitongkuaidi' : '汇通快递' , 'zhongtong' : '中通' , 'yunda' : '韵达'} ....更多快递名称你发现
           print p.news() # 新闻获得
           print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/') # url = 迅雷地址 迅雷地址转换
+          print p.xuanfeng(url = 'qqdl://ZnRwOi8vZHlnb2QxOmR5Z29kMUBkMDE4LmR5Z29kLm5ldDo4ODU4L+mbqueLl+WFhOW8ny9b55S15b2x5aSp5aCCd3d3LmR5Z29kLm5ldF3pm6rni5flhYTlvJ9EVkQucm12Yg==') # url = 旋风地址 旋风地址转换
+          print p.dianxin_phone(areaCode = '025' ,  areaId = '10') # 电信电话号码查询 areaCode 区号 areaId  地区编号 (showCount 展示数目)
+
 
 
 

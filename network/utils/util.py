@@ -90,7 +90,15 @@ def xunlei(**kw):
         return __url[2:-2]
 
 
+def xuanfeng(**kw):
+    if kw.has_key('url') : 
+        if kw['url'] and isinstance(kw['url'] , (str, unicode)) and kw['url'].startswith('qqdl://'):
+            return base64.decodestring(kw['url'].decode('utf-8')[7:])
+        return ''
+
+
 
 
 if __name__ == "__main__":
     print xunlei(url = 'thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
+    print xuanfeng(url = 'qqdl://ZnRwOi8vZHlnb2QxOmR5Z29kMUBkMDE4LmR5Z29kLm5ldDo4ODU4L+mbqueLl+WFhOW8ny9b55S15b2x5aSp5aCCd3d3LmR5Z29kLm5ldF3pm6rni5flhYTlvJ9EVkQucm12Yg==')

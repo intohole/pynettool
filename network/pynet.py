@@ -42,6 +42,8 @@ _net_dict = {'sina_ip':
                         }, 'base_url': 'http://www.toutiao.com/api/article/recent/?'},
              'xunlei':
             {'call_back': util.xunlei},
+            'xuanfeng':
+            {'call_back' : util.xuanfeng},
              'dianxin_phone':
             {'query': {"areaId": "10",
                        "areaCode": "025",
@@ -115,16 +117,17 @@ class PyNet(object):
 
 if __name__ == '__main__':
     p = PyNet()
-    # print p.baidu_search_num(word='htc')
-    # print p.baidu_releate(word='htc')
-    # print p.baidu_area_num(word='htc', num=10, areaid='')
-    # print p.sina_ip(ip='220.181.111.86')
-    # print p.sina_phone(m='13833445577')
-    # print p.baidu_suggest(wd='天气')
-    # print p.youdao_fanyi(q='word')
-    # print p.kuaidi(type='huitongkuaidi', postid='350146137409')
-    # print p.kuaidi(type='shentong', postid='768089232106')
-    # print p.kuaidi(type='shunfeng', postid='574869634762')
-    # print p.news()
-    # print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
+    print p.baidu_search_num(word='htc')
+    print p.baidu_releate(word='htc')
+    print p.baidu_area_num(word='htc', num=10, areaid='')
+    print p.sina_ip(ip='220.181.111.86')
+    print p.sina_phone(m='13833445577')
+    print p.baidu_suggest(wd='天气')
+    print p.youdao_fanyi(q='word')
+    print p.kuaidi(type='huitongkuaidi', postid='350146137409')
+    print p.kuaidi(type='shentong', postid='768089232106')
+    print p.kuaidi(type='shunfeng', postid='574869634762')
+    print p.news()
+    print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
+    print p.xuanfeng(url = 'qqdl://ZnRwOi8vZHlnb2QxOmR5Z29kMUBkMDE4LmR5Z29kLm5ldDo4ODU4L+mbqueLl+WFhOW8ny9b55S15b2x5aSp5aCCd3d3LmR5Z29kLm5ldF3pm6rni5flhYTlvJ9EVkQucm12Yg==')
     print p.dianxin_phone(areaCode = '025' ,  areaId = '10')
