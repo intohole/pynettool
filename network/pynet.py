@@ -4,13 +4,14 @@
 
 from utils import network
 from utils import util
+import netparser
 import json
 import urllib
 import time
 
 _net_dict = {'sina_ip':
             {'query': {'format': 'text'}, 'base_url':
-             'http://int.dpool.sina.com.cn/iplookup/iplookup.php?'},
+             'http://int.dpool.sina.com.cn/iplookup/iplookup.php?' , 'parser': netparser.sina_ip},
              'youdao_ip':
             {'query': {'type': 'ip'}, 'base_url':
              'http://www.youdao.com/smartresult-xml/search.s?'},
@@ -42,8 +43,8 @@ _net_dict = {'sina_ip':
                         }, 'base_url': 'http://www.toutiao.com/api/article/recent/?'},
              'xunlei':
             {'call_back': util.xunlei},
-            'xuanfeng':
-            {'call_back' : util.xuanfeng},
+             'xuanfeng':
+            {'call_back': util.xuanfeng},
              'dianxin_phone':
             {'query': {"areaId": "10",
                        "areaCode": "025",
@@ -111,7 +112,10 @@ class PyNet(object):
             if self.__get_rule[key].has_key('query'):
                 for __key, __val in self.__get_rule[key]['query'].items():
                     kw[__key] = __val
-            return self.__get_response(url=__url, **kw)
+            __result = self.__get_response(url=__url, **kw)
+            if self.__get_rule[key].has_key('parser'):
+                return self.__get_rule[key]['parser'](__result)()
+            return __result
         return wrap
 
 
