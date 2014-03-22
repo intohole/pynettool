@@ -6,6 +6,7 @@ from utils import util
 from utils import Trie
 from utils import network
 import json
+import os
 
 week_name = ( '一' , '二' , '三' , '四' , '五' , '六' , '日')
 week_dict = {'一' :  0 , '二' : 1 , '三' : 2 , '四' : 3 , '五' : 4 , '六' : 5 , '天':6 }
@@ -30,7 +31,8 @@ class ChineseWeather(object):
 
     def load_city_id(self):
         __content = []
-        with open('data/weather.txt') as f:
+        __weather__file = os.path.join(os.path.abspath(os.path.dirname(__file__)) , 'data/weather.txt')
+        with open(__weather__file) as f:
             __content.extend([line.strip() for line in f.readlines()])
         for line in __content:
             weather_info = line.split('#')
