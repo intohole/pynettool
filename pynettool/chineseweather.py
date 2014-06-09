@@ -57,7 +57,6 @@ class ChineseWeather(object):
         __city_id = self.get_city_id(cityname)
         if __city_id[1]:
             url = 'http://m.weather.com.cn/data/%s.html' % __city_id[1]
-            print url
             return self.parser_to_string(network.get_html_string(url , {}))
         return None
 
@@ -77,8 +76,29 @@ class ChineseWeather(object):
         return __weather_arry
 
 
+    def getsk(self , cityname):
+        __city_id = self.get_city_id(cityname)
+        if __city_id and __city_id[1]:
+            __url = 'http://www.weather.com.cn/data/sk/%s.html' % __city_id[1]
+            return json.loads( network.get_html_string(__url , {}) )
+        return None
+
+
+    def getweatherdata(self , cityname):
+        __city_id = self.get_city_id(cityname)
+        if __city_id and __city_id[1]:
+            __url = 'http://www.weather.com.cn/data/cityinfo/%s.html' % __city_id[1]
+            return json.loads( network.get_html_string(__url , {}) )
+        return None
+
+
+
+
+
 if __name__ == "__main__":
     c = ChineseWeather()
+    print c.getweatherdata('江苏南京'.encode('utf-8'))
+    print c.getsk('江苏南京'.encode('utf-8'))
     for i in c.get_city_weather("江苏南京".encode("utf-8")):
         print i
 

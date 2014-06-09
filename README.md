@@ -9,6 +9,8 @@ pynettool说明
     
     from pynettool.chineseweather import ChineseWeather
     c = ChineseWeather()
+    print c.getweatherdata('江苏南京'.encode('utf-8')) #一个城市的天气数据
+    print c.getsk('江苏南京'.encode('utf-8')) #实况天气信息 返回是个词典　格式简单　自己解析吧
     #get_city_weather 支持任何一个城市 格式 省份 市 区县 特殊情况 上海 上海 则为上海
     for i in c.get_city_weather("江苏南京江宁".encode("utf-8")):
         print i 
