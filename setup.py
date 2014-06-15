@@ -4,7 +4,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 kw = dict(
     name='pynettool',
-    version='0.0.4',
+    version='0.1.0',
     description='fast use web service ',
     author='intoblack',
     author_email='intoblack86@gmail.com',

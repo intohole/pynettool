@@ -8,9 +8,6 @@ import re
 import base64
 
 
-
-
-
 _jload = json.loads
 lang_detect = re.compile("<meta(.+?)\charset=[a-zA-Z0-9]+\">", re.IGNORECASE)
 
@@ -50,8 +47,6 @@ def randintbyrang(_min, _max):
     return random.randint(_min, _max)
 
 
-
-
 def timems():
     return long(time.time()) * 1000
 
@@ -79,26 +74,61 @@ def getjson(data):
 
 
 def xunlei(**kw):
-    
+
     if kw.has_key('url'):
         url = kw['url']
     else:
         return ''
-    if url and isinstance(url , (str , unicode)) and url.startswith('thunder://'):
+    if url and isinstance(url, (str, unicode)) and url.startswith('thunder://'):
         __url = base64.decodestring(url[10:])
-        #去除掉迅雷 AA***ZZ
+        # 去除掉迅雷 AA***ZZ
         return __url[2:-2]
 
 
 def xuanfeng(**kw):
-    if kw.has_key('url') : 
-        if kw['url'] and isinstance(kw['url'] , (str, unicode)) and kw['url'].startswith('qqdl://'):
+    if kw.has_key('url'):
+        if kw['url'] and isinstance(kw['url'], (str, unicode)) and kw['url'].startswith('qqdl://'):
             return base64.decodestring(kw['url'].decode('utf-8')[7:])
         return ''
 
 
+def totimestr(**kw):
+    class __howlong(object):
+        __SEC = 1
+        __MINUTE = 60 * __SEC
+        __HOUR = 60 * __MINUTE
+        __DAY = 24 * __HOUR
+        __YEAR = 365 * __DAY
+
+        def __init__(self, **kw):
+            self.__time = None
+            if kw.has_key('t'):
+                self.__time = self.__totime(kw['t'])
+
+            if self.__time:
+                self.year = self.__time / self.__YEAR
+                self.miute = self.__time / self.__MINUTE
+                self.day = self.__time / self.__DAY
+                self.hour = self.__time / self.__HOUR
+            else:
+                self.year = None
+                self.miute = None
+                self.day = None
+                self.hour = None
+
+        def __totime(self, time_string):
+            if time_string:
+                if isinstance(time_string, (str, unicode)):
+                    time_string = time_string.replace('年', '/')
+                    time_string = time_string.replace('月', '/')
+                    time_string = time_string.replace('日',  '')
+                    time_string = time_string.replace('号', '')
+                    time_string = time_string.replace('-', '/')
+                    return time.time() - time.mktime(time.strptime(time_string.encode('utf-8'), '%Y/%m/%d'))
+            return None
+    return __howlong(**kw)
 
 
 if __name__ == "__main__":
-    print xunlei(url = 'thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
-    print xuanfeng(url = 'qqdl://ZnRwOi8vZHlnb2QxOmR5Z29kMUBkMDE4LmR5Z29kLm5ldDo4ODU4L+mbqueLl+WFhOW8ny9b55S15b2x5aSp5aCCd3d3LmR5Z29kLm5ldF3pm6rni5flhYTlvJ9EVkQucm12Yg==')
+    print xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
+    print xuanfeng(url='qqdl://ZnRwOi8vZHlnb2QxOmR5Z29kMUBkMDE4LmR5Z29kLm5ldDo4ODU4L+mbqueLl+WFhOW8ny9b55S15b2x5aSp5aCCd3d3LmR5Z29kLm5ldF3pm6rni5flhYTlvJ9EVkQucm12Yg==')

@@ -11,7 +11,7 @@ import time
 
 _net_dict = {'sina_ip':
             {'query': {'format': 'text'}, 'base_url':
-             'http://int.dpool.sina.com.cn/iplookup/iplookup.php?' , 'parser': netparser.sina_ip},
+             'http://int.dpool.sina.com.cn/iplookup/iplookup.php?', 'parser': netparser.sina_ip},
              'youdao_ip':
             {'query': {'type': 'ip'}, 'base_url':
              'http://www.youdao.com/smartresult-xml/search.s?'},
@@ -55,9 +55,8 @@ _net_dict = {'sina_ip':
                        "numberFee": "",
                        "maxStoredCalls": "",
                        "numTypeReg": ""}, 'base_url':
-                'http://js.189.cn/nmall/shop/number/queryNumber.json?'}
-
-             }
+                'http://js.189.cn/nmall/shop/number/queryNumber.json?'},
+             'howold': {'call_back':  util.totimestr}}
 
 
 class PyNet(object):
@@ -135,3 +134,4 @@ if __name__ == '__main__':
     print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/')
     print p.xuanfeng(url = 'qqdl://ZnRwOi8vZHlnb2QxOmR5Z29kMUBkMDE4LmR5Z29kLm5ldDo4ODU4L+mbqueLl+WFhOW8ny9b55S15b2x5aSp5aCCd3d3LmR5Z29kLm5ldF3pm6rni5flhYTlvJ9EVkQucm12Yg==')
     print p.dianxin_phone(areaCode = '025' ,  areaId = '10')
+    print p.howold(t = '1992/02/03').year

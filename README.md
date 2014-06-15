@@ -48,6 +48,7 @@ pynet 接口
           print p.xunlei(url='thunder://QUFmdHA6Ly91OnVAZDMuZGwxMjM0LmNvbTo4MDA2L1vnlLXlvbHlpKnloIJ3d3cuZHkyMDE4LmNvbV3lrrblm63pmLLnur9IROiLseivreS4reWtly5ybXZiWlo=/') # url = 迅雷地址 迅雷地址转换
           print p.xuanfeng(url = 'qqdl://ZnRwOi8vZHlnb2QxOmR5Z29kMUBkMDE4LmR5Z29kLm5ldDo4ODU4L+mbqueLl+WFhOW8ny9b55S15b2x5aSp5aCCd3d3LmR5Z29kLm5ldF3pm6rni5flhYTlvJ9EVkQucm12Yg==') # url = 旋风地址 旋风地址转换
           print p.dianxin_phone(areaCode = '025' ,  areaId = '10') # 电信电话号码查询 areaCode 区号 areaId  地区编号 (showCount 展示数目)
+          print p.howold(t = '1992/02/03').year #你想知道你现在多大了吗　试试这个　输入你的生日 格式 :(1992年10月20号  ,1992/02/04 ,1992-03-04)  你会获得你存在的小时(hour)　分钟(minute)　天数(day) 年(year)
 
 
 
